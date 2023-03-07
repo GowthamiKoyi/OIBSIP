@@ -1,0 +1,139 @@
+import java.util.*;
+public class Main {
+Scanner sc = new Scanner(System.in);
+HashMap<String,Integer> det = new HashMap<String,Integer>();
+    public void User_Login() {
+		det.put("gowthami",1234);
+		System.out.println("\n------ WELCOME TO THE ONLINE EXAM PORTAL ------");
+		String uname;
+		System.out.println("Enter UserName : ");
+		uname = sc.next();
+		int pwd;
+		System.out.println("Enter Password : ");
+		pwd= sc.nextInt();
+		if(det.containsKey(uname)) {
+			if(det.get(uname)==pwd){
+				System.out.println("\n Welcome @ User");
+				Options_Menu();	}
+			else {
+				System.out.println("Please Enter Valid Password For: "+uname);
+				User_Login();    }
+        }
+		else{
+			System.out.println("Please Enter Valid User Name");
+		}
+    
+	}
+	public void Options_Menu() {
+		int ch;
+		System.out.println("===User Menu===");
+		System.out.println("1.Update Profile \n 2.Write Exam \n 3.Exit ");
+		System.out.println("Enter The ch: ");
+		ch = sc.nextInt();
+		switch(ch) {
+		case 1:
+			det=Update_det();
+			Options_Menu();
+			break;
+		case 2:
+			Examination();
+			Options_Menu();
+			break;
+		case 3:
+            System.out.println("Thanks For Using!!!");
+			System.exit(0);
+			break;
+		default:
+			System.out.println("Please Enter Number in User Menu Only");
+		}
+	}
+	public HashMap<String,Integer> Update_det(){
+		String update_name;
+		int update_pwd;
+		System.out.println("updatedet Profile");
+		System.out.println("Enter The Username: ");
+		update_name = sc.next();
+		if(det.containsKey(update_name)) {
+		System.out.println("Enter New Password for your Account");
+		update_pwd = sc.nextInt();
+		det.replace(update_name, update_pwd);
+        System.out.println("Updated Your det Successfully....");
+		}
+		else {
+			System.out.println("Enter The Correct UserName");
+		}
+		return det;
+	}
+public void Examination() {
+    Calendar cr = Calendar.getInstance();
+	long StartTime=System.currentTimeMillis();
+	long EndTime=StartTime+30;
+	int AnsweredQueries=0;
+	int UserAnswer,MarksSecured;
+	System.out.println("Please Start Your Exam");
+	System.out.println("Examination Instructions: ");
+	System.out.println("You Have To Answer 5 Questions in 30 Seconds");
+	System.out.println("Each Question carries 10 marks and -5 for wrong answer");
+	HashMap<String,ArrayList<String>> queries=new HashMap<String,ArrayList<String>>();
+	ArrayList<String> question1=new ArrayList<String>();
+    question1.add("6");
+	question1.add("7");
+	question1.add("8");
+	question1.add("9");
+	question1.add("3");
+	queries.put("Number of primitive data types in java are?",question1);
+	ArrayList<String> question2=new ArrayList<String>();
+	question2.add("exception");
+	question2.add("error");
+	question2.add("52 I");
+	question2.add("none");
+	question2.add("3");
+	queries.put(" from this code snippet predict the output : int a=52; \n char c= \'I\'; \n System.out.print(a);\n System.out.print(c);",question2);
+	ArrayList<String> question3=new ArrayList<String>();
+	question3.add("object references");
+	question3.add("objects");
+	question3.add("primitive data type");
+	question3.add("none");
+	question3.add("2");
+	queries.put("Arrays in java are?",question3);
+	ArrayList<String> question4=new ArrayList<String>();
+	question4.add("At run time");
+	question4.add("At compile time");
+	question4.add("Depends on the code");
+	question4.add("none");
+	question4.add("1");
+	queries.put("When is the object created with new keyword?",question4);
+    ArrayList<String> question5=new ArrayList<String>();
+	question5.add("true");
+	question5.add("false");
+	question5.add("an int value");
+	question5.add("none");
+	question5.add("3");
+	queries.put("compareTo returns?",question5);
+	int sno=0;
+    Set<String> set=queries.keySet(); 
+    ArrayList<String> al=new ArrayList<>(set);
+    int x=al.size();
+	while(System.currentTimeMillis()<EndTime || sno<x) {
+        String i=al.get(sno);
+		System.out.println("\n\nQ."+(sno+1)+") "+i);
+		System.out.println("\n(1) "+queries.get(i).get(0)+"\t"+"(2) "+queries.get(i).get(1)+"\t"+"(3) "+queries.get(i).get(2)+"\t"+"(4) "+queries.get(i).get(3)+" ");
+		System.out.println("Enter Option");
+		UserAnswer=sc.nextInt();
+		System.out.println("Your Answers Are Submited.....");
+		if(UserAnswer==Integer.parseInt(queries.get(i).get(4))) {
+			AnsweredQueries++;
+		}
+        sno++;
+	}
+	System.out.println("You Have Completed the Exam");
+	MarksSecured=AnsweredQueries*10-((5-AnsweredQueries)*5); 
+	System.out.println("Your score is..."+" "+MarksSecured+"/50");	
+}
+
+public static void main (String[] args)
+{
+	Main em =new Main();
+		em.User_Login(); 
+}
+}
